@@ -1,6 +1,5 @@
 const express = require('express');
-const { parse } = require('path/posix');
-const app = express()
+const app = express();
 const port = process.env.PORT || 3000;
 
 app.use(express.json());
@@ -27,9 +26,10 @@ app.post('/api/courses', (req, res) => {
 })
 
 app.put('/api/courses/:id', (req, res) => {
-  let course = courses.find(c => c.id === parseInt(req.body.id));
-  if (!course)
+  let course = courses.find(c => c.id === parseInt(req.params.id));
+  if (!course) {
     res.status(404).send("Course with the given id can not be found.");
+  }
   course.name = req.body.name;
   res.send(course)
 })

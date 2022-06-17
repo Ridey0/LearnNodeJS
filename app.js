@@ -1,10 +1,19 @@
 const express = require('express');
 const logger = require('./logger');
+const helmet = require('helmet');
+const morgan = require('morgan');
 const app = express();
 const port = process.env.PORT || 3000;
 
+app.use(helmet());
 app.use(express.json());
 app.use(logger);
+app.use(express.static('public'));
+
+if (app.get('env') === 'development') {
+  app.use(morgan('tiny'));
+  console.log('Morgan is enabled...')
+}
 
 const courses = [
   {id: 1, name: 'Math'},

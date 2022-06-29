@@ -4,9 +4,11 @@ const helmet = require('helmet');
 const morgan = require('morgan');
 const config = require('config');
 const app = express();
-const startupDebugger = require('debug')('app:startup');
+const startupDebugger = require('debug')('app:startup'); 
 const port = process.env.PORT || 3000;
 
+app.set('view engine', 'pug'); // Templating Dynamic Page
+app.set('views', './views');
 app.use(helmet());
 app.use(express.json());
 app.use(logger);
@@ -27,6 +29,10 @@ const courses = [
   {id: 2, name: 'English'},
   {id: 3, name: 'Science'}
 ]
+
+app.get('/', (req, res) => {
+  res.render('index', { title: 'My Express App', message: 'Hello'})
+})
 
 app.get('/api/courses/:id', (req, res) => {
   let course = courses.find(c => c.id === parseInt(req.params.id));

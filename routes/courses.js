@@ -6,10 +6,6 @@ const courses = [
     {id: 2, name: 'English'},
     {id: 3, name: 'Science'}
   ]
-
-router.get('/', (req, res) => {
-    res.render('index', { title: 'My Express App', message: 'Hello'})
-  })
   
   router.get('/:id', (req, res) => {
     let course = courses.find(c => c.id === parseInt(req.params.id));
